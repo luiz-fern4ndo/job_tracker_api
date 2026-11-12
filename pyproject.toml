@@ -1,0 +1,10 @@
+[project]
+name = "job-tracker-api"
+version = "0.1.0"
+description = "API for tracking job applications and interviews in the tech sector."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
+
+[tool.uv]
+package = false

@@ -37,3 +37,8 @@
 - Score de compatibilidade calculado (v2)
 - IA (v3)
 - Tabela `User` + auth JWT (Fase 4)
+
+
+## Tabela: applications
+
+![alt text](image.png)

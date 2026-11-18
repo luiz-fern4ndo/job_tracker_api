@@ -1,12 +1,15 @@
 from datetime import datetime
 
 from sqlalchemy import JSON, Enum
-from sqlalchemy.orm import Mapped, mapped_as_dataclass, mapped_column, registry
+from sqlalchemy.orm import (
+    Mapped,
+    mapped_as_dataclass,
+    mapped_column,
+)
 from sqlalchemy.sql import func
 
 from models import enums
-
-table_registry = registry()
+from models.base import table_registry
 
 
 @mapped_as_dataclass(table_registry)
@@ -35,17 +38,15 @@ class Application:
     )
     resume_used: Mapped[enums.CurriculumUsedStatus] = mapped_column(
         Enum(
-            enums.CurriculumUsedStatus,
-            name='resume_used',
-            native_enum=False
+            enums.CurriculumUsedStatus, name='resume_used', native_enum=False
         ),
-        default=enums.CurriculumUsedStatus.PT
+        default=enums.CurriculumUsedStatus.PT,
     )
     status: Mapped[enums.ApplicationStatus] = mapped_column(
-            Enum(
-                enums.ApplicationStatus,
-                name='status',
-                native_enum=False,
-            ),
-            default=enums.ApplicationStatus.APPLIED
-        )
+        Enum(
+            enums.ApplicationStatus,
+            name='status',
+            native_enum=False,
+        ),
+        default=enums.ApplicationStatus.APPLIED,
+    )

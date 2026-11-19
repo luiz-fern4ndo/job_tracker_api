@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 from fastapi import APIRouter, Depends
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from database import get_session
@@ -25,3 +26,14 @@ def application_create(
     session.refresh(application_new)
 
     return application_new
+
+
+@router.get(
+        '/applications/',
+        status_code=HTTPStatus.OK,
+        response_model=list[ApplicationRead]
+)
+def application_read(session: Session = Depends(get_session)):
+    applications = session.scalars(select(Application)).all()
+
+    return applications

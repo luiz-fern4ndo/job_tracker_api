@@ -19,7 +19,7 @@ class ApplicationCreate(BaseModel):
     salary_range: str | None
     next_step: str | None
     notes: str | None
-    work_model: WorkModelStatus = WorkModelStatus.IN_PERSON
+    work_model: WorkModelStatus | None = None
     resume_used: CurriculumUsedStatus = CurriculumUsedStatus.PT
     status: ApplicationStatus = ApplicationStatus.APPLIED
 

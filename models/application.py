@@ -28,13 +28,13 @@ class Application:
     salary_range: Mapped[str | None]
     next_step: Mapped[str | None]
     notes: Mapped[str | None]
-    work_model: Mapped[enums.WorkModelStatus] = mapped_column(
+    work_model: Mapped[enums.WorkModelStatus | None] = mapped_column(
         Enum(
             enums.WorkModelStatus,
             name='work_model_status',
             native_enum=False,
         ),
-        default=enums.WorkModelStatus.HYBRID,
+        default=None,
     )
     resume_used: Mapped[enums.CurriculumUsedStatus] = mapped_column(
         Enum(

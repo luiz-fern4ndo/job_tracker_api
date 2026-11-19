@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -37,3 +37,24 @@ def application_read(session: Session = Depends(get_session)):
     applications = session.scalars(select(Application)).all()
 
     return applications
+
+
+@router.get(
+        '/applications/{application_id}',
+        status_code=HTTPStatus.OK,
+        response_model=ApplicationRead
+)
+def application_read_with_id(
+    application_id: int, session: Session = Depends(get_session)):
+
+    application_db = session.scalar(
+        select(Application).where(Application.id == application_id)
+    )
+
+    if not application_db:
+        raise HTTPException(
+            status_code=HTTPStatus.NOT_FOUND,
+            detail='Application not found'
+        )
+
+    return application_db

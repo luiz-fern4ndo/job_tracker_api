@@ -44,3 +44,17 @@ class ApplicationRead(BaseModel):
 
 class ApplicationReadWithInterviews(ApplicationRead):
     interviews: list[InterviewRead]
+
+
+class ApplicationUpdate(BaseModel):
+    company: str | None = None
+    job_title: str | None = None
+    source: str | None = None
+    technologies: list[str] | None = None
+    response_timeframe_days: int | None = None
+    salary_range: str | None = None
+    next_step: str | None = None
+    notes: str | None = None
+    work_model: WorkModelStatus | None = None
+    resume_used: CurriculumUsedStatus | None = None
+    status: ApplicationStatus | None = None

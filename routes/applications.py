@@ -6,7 +6,11 @@ from sqlalchemy.orm import Session
 
 from database import get_session
 from models.application import Application
-from schemas.application import ApplicationCreate, ApplicationRead
+from schemas.application import (
+    ApplicationCreate,
+    ApplicationRead,
+    ApplicationUpdate
+)
 
 router = APIRouter()
 
@@ -16,7 +20,7 @@ router = APIRouter()
     response_model=ApplicationRead,
     status_code=HTTPStatus.CREATED,
 )
-def application_create(
+def create_application(
     application: ApplicationCreate, session: Session = Depends(get_session)
 ):
     application_new = Application(**application.model_dump())
@@ -33,7 +37,7 @@ def application_create(
         status_code=HTTPStatus.OK,
         response_model=list[ApplicationRead]
 )
-def application_read(session: Session = Depends(get_session)):
+def read_application(session: Session = Depends(get_session)):
     applications = session.scalars(select(Application)).all()
 
     return applications
@@ -44,7 +48,7 @@ def application_read(session: Session = Depends(get_session)):
         status_code=HTTPStatus.OK,
         response_model=ApplicationRead
 )
-def application_read_with_id(
+def read_application_with_id(
     application_id: int, session: Session = Depends(get_session)):
 
     application_db = session.scalar(
@@ -56,5 +60,35 @@ def application_read_with_id(
             status_code=HTTPStatus.NOT_FOUND,
             detail='Application not found'
         )
+
+    return application_db
+
+
+@router.patch(
+        '/applications/{application_id}',
+        status_code=HTTPStatus.OK,
+        response_model=ApplicationRead
+)
+def update_application(
+    application: ApplicationUpdate,
+    application_id: int,
+    session: Session = Depends(get_session),
+):
+    application_db = session.scalar(
+        select(Application).where(Application.id == application_id)
+    )
+
+    if not application_db:
+        raise HTTPException(
+            detail='Application not found',
+            status_code=HTTPStatus.NOT_FOUND
+        )
+
+    for key, value in application.model_dump(exclude_unset=True).items():
+        setattr(application_db, key, value)
+
+    session.add(application_db)
+    session.commit()
+    session.refresh(application_db)
 
     return application_db

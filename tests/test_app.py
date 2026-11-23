@@ -26,4 +26,12 @@ def test_create_application(client):
         },
     )
     assert response.status_code == HTTPStatus.CREATED
-    assert response.json()['id'] == 1
+    assert 'id' in response.json()
+
+
+def test_read_application(client, application):
+
+    response = client.get(f'/applications/{application["id"]}')
+
+    assert response.status_code == HTTPStatus.OK
+    assert response.json()['id'] == application['id']

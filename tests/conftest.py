@@ -32,3 +32,31 @@ def client(session):
         yield client
 
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def application(client):
+    response = client.post(
+        '/applications/',
+        json={
+            'company': 'Secret',
+            'job_title': 'Desenvolvedor Backend Python',
+            'source': 'Linkedin',
+            'technologies': [
+                'Python',
+                'FastAPI',
+                'Django',
+                'PostgreSQL',
+                'Docker',
+            ],
+            'response_timeframe_days': 7,
+            'salary_range': 'a combinar',
+            'next_step': '',
+            'notes': '',
+            'work_model': 'remote',
+            'resume_used': 'pt',
+            'status': 'applied',
+        },
+    )
+
+    return response.json()

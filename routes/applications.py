@@ -9,7 +9,7 @@ from models.application import Application
 from schemas.application import (
     ApplicationCreate,
     ApplicationRead,
-    ApplicationUpdate
+    ApplicationUpdate,
 )
 
 router = APIRouter()
@@ -33,9 +33,9 @@ def create_application(
 
 
 @router.get(
-        '/applications/',
-        status_code=HTTPStatus.OK,
-        response_model=list[ApplicationRead]
+    '/applications/',
+    status_code=HTTPStatus.OK,
+    response_model=list[ApplicationRead],
 )
 def read_application(session: Session = Depends(get_session)):
     applications = session.scalars(select(Application)).all()
@@ -44,12 +44,13 @@ def read_application(session: Session = Depends(get_session)):
 
 
 @router.get(
-        '/applications/{application_id}',
-        status_code=HTTPStatus.OK,
-        response_model=ApplicationRead
+    '/applications/{application_id}',
+    status_code=HTTPStatus.OK,
+    response_model=ApplicationRead,
 )
 def read_application_with_id(
-    application_id: int, session: Session = Depends(get_session)):
+    application_id: int, session: Session = Depends(get_session)
+):
 
     application_db = session.scalar(
         select(Application).where(Application.id == application_id)
@@ -57,17 +58,16 @@ def read_application_with_id(
 
     if not application_db:
         raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND,
-            detail='Application not found'
+            status_code=HTTPStatus.NOT_FOUND, detail='Application not found'
         )
 
     return application_db
 
 
 @router.patch(
-        '/applications/{application_id}',
-        status_code=HTTPStatus.OK,
-        response_model=ApplicationRead
+    '/applications/{application_id}',
+    status_code=HTTPStatus.OK,
+    response_model=ApplicationRead,
 )
 def update_application(
     application: ApplicationUpdate,
@@ -80,8 +80,7 @@ def update_application(
 
     if not application_db:
         raise HTTPException(
-            detail='Application not found',
-            status_code=HTTPStatus.NOT_FOUND
+            detail='Application not found', status_code=HTTPStatus.NOT_FOUND
         )
 
     for key, value in application.model_dump(exclude_unset=True).items():
@@ -95,12 +94,10 @@ def update_application(
 
 
 @router.delete(
-        '/applications/{application_id}/',
-        status_code=HTTPStatus.NO_CONTENT
+    '/applications/{application_id}/', status_code=HTTPStatus.NO_CONTENT
 )
 def delete_application(
-    application_id: int,
-    session: Session = Depends(get_session)
+    application_id: int, session: Session = Depends(get_session)
 ):
     application = session.scalar(
         select(Application).where(Application.id == application_id)
@@ -108,8 +105,7 @@ def delete_application(
 
     if not application:
         raise HTTPException(
-            detail='Application not found',
-            status_code=HTTPStatus.NOT_FOUND
+            detail='Application not found', status_code=HTTPStatus.NOT_FOUND
         )
     session.delete(application)
     session.commit()

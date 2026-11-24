@@ -39,7 +39,7 @@ def application(client):
     response = client.post(
         '/applications/',
         json={
-            'company': 'Secret',
+            'company': 'Globo',
             'job_title': 'Desenvolvedor Backend Python',
             'source': 'Linkedin',
             'technologies': [

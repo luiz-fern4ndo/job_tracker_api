@@ -94,7 +94,7 @@ def update_application(
 
 
 @router.delete(
-    '/applications/{application_id}/', status_code=HTTPStatus.NO_CONTENT
+    '/applications/{application_id}', status_code=HTTPStatus.NO_CONTENT
 )
 def delete_application(
     application_id: int, session: Session = Depends(get_session)

@@ -4,19 +4,40 @@ API for tracking job applications and interviews in the tech sector.
 
 ## Status
 
-🚧 Em desenvolvimento — Fase 2 (modelagem)
+🚧 Em desenvolvimento — Fase 6 (CRUD de Application e testes)
 
-## Decisões técnicas
+## Tecnologias
 
-- **uv** — lockfile + reprodutibilidade; separa dev-deps; rápido; compatível com pip.
-- **Layout flat** — app, não lib; `src/` não paga o custo agora; reversível.
-- **Ruff** — unifica lint + format + isort em uma ferramenta; menos superfície.
-- **`package = false`** — app (Tipo B), não lib; evita rebuild/stale import; CI mais rápido.
+- [FastAPI](https://fastapi.tiangolo.com/) — framework web
+- [SQLAlchemy 2.0](https://www.sqlalchemy.org/) — ORM
+- [Pydantic v2](https://docs.pydantic.dev/) — validação de dados
+- [Pytest](https://docs.pytest.org/) — testes
+- [SQLite](https://www.sqlite.org/) — banco de dados (dev)
+- [uv](https://docs.astral.sh/uv/) — gerenciador de dependências
+- [Ruff](https://docs.astral.sh/ruff/) — lint e formatação
+
+## Endpoints
+
+### Applications
+- `POST /applications/` — cria uma candidatura
+- `GET /applications/` — lista todas as candidaturas
+- `GET /applications/{id}` — busca candidatura por ID
+- `PATCH /applications/{id}` — atualiza parcialmente uma candidatura
+- `DELETE /applications/{id}` — deleta uma candidatura
+
+*(Endpoints de Interview em desenvolvimento)*
 
 ## Como rodar
 
-Em breve (Fase 2).
+```bash
+# Instalar dependências
+uv sync
 
-## Requisitos
+# Rodar a API
+uv run uvicorn main:app --reload
 
-- Python 3.14+
+# Acessar o Swagger
+# http://127.0.0.1:8000/docs
+
+# Rodar os testes
+uv run pytest

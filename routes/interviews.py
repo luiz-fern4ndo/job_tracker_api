@@ -37,7 +37,3 @@ def create_interview(
     session.refresh(interview)
 
     return interview
-
-
-# TODO: Criar uma entrevista ligada a uma candidatura e executar,
-# acho que o erro está na linha 34, quando cria a entrevista

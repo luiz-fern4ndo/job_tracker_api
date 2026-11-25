@@ -25,7 +25,8 @@ class Application:
     company: Mapped[str]
     job_title: Mapped[str]
     interviews: Mapped[list['Interview']] = relationship(
-        back_populates='application'
+        back_populates='application',
+        init=False
     )
 
     application_date: Mapped[datetime] = mapped_column(

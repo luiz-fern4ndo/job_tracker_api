@@ -23,6 +23,7 @@ router = APIRouter()
 def create_application(
     application: ApplicationCreate, session: Session = Depends(get_session)
 ):
+
     application_new = Application(**application.model_dump())
 
     session.add(application_new)

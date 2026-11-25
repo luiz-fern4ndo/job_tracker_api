@@ -22,7 +22,8 @@ class Interview:
     next_steps: Mapped[str | None]
     application_id: Mapped[int] = mapped_column(ForeignKey('applications.id'))
     application: Mapped['Application'] = relationship(
-        back_populates='interviews'
+        back_populates='interviews',
+        init=False
     )
     stage: Mapped[enums.InterviewStageStatus] = mapped_column(
         Enum(

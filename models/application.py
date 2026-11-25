@@ -1,15 +1,20 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import JSON, Enum
 from sqlalchemy.orm import (
     Mapped,
     mapped_as_dataclass,
     mapped_column,
+    relationship,
 )
 from sqlalchemy.sql import func
 
 from models import enums
 from models.base import table_registry
+
+if TYPE_CHECKING:
+    from models.interview import Interview
 
 
 @mapped_as_dataclass(table_registry)
@@ -19,6 +24,10 @@ class Application:
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
     company: Mapped[str]
     job_title: Mapped[str]
+    interviews: Mapped[list['Interview']] = relationship(
+        back_populates='application'
+    )
+
     application_date: Mapped[datetime] = mapped_column(
         init=False, server_default=func.now()
     )

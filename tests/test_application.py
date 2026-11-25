@@ -61,8 +61,7 @@ def test_delete_application(client, application):
 def test_update_application(client, application):
 
     response = client.patch(
-        f'/applications/{application["id"]}',
-        json={'company': 'Nova Empresa'}
+        f'/applications/{application["id"]}', json={'company': 'Nova Empresa'}
     )
 
     assert response.status_code == HTTPStatus.OK

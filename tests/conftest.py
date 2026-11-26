@@ -67,15 +67,13 @@ def interview(client, application):
     response = client.post(
         '/interviews/',
         json={
-            {
-                'id': application['id'],
-                'interview_date': '2026-11-25T14:02:35.068000',
-                'feedback': 'string',
-                'next_steps': 'string',
-                'stage': 'rh',
-                'language': 'pt',
-                'result': 'in_progress',
-            }
+            'application_id': application['id'],
+            'interview_date': '2026-11-25T14:02:35.068000',
+            'feedback': 'string',
+            'next_steps': 'string',
+            'stage': 'rh',
+            'language': 'pt',
+            'result': 'in_progress',
         },
     )
 

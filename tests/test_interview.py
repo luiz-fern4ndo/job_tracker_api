@@ -17,3 +17,10 @@ def test_create_interview(client, application):
 
     assert response.status_code == HTTPStatus.CREATED
     assert 'id' in response.json()
+
+
+def test_read_all_interviews(client, application, interview):
+    response = client.get('/interviews/')
+
+    assert response.status_code == HTTPStatus.OK
+    assert response.json()[0]['application_id'] == application['id']

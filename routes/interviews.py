@@ -37,3 +37,15 @@ def create_interview(
     session.refresh(interview)
 
     return interview
+
+
+@router.get(
+        '/interviews/',
+        status_code=HTTPStatus.OK,
+        response_model=list[InterviewRead]
+)
+def read_all_interviews(session: Session = Depends(get_session)):
+
+    interview_db = session.scalars(select(Interview)).all()
+
+    return interview_db

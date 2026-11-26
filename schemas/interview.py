@@ -22,6 +22,7 @@ class InterviewCreate(BaseModel):
 
 class InterviewRead(BaseModel):
     id: int
+    application_id: int
     interview_date: datetime
     feedback: str | None
     next_steps: str | None

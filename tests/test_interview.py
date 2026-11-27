@@ -24,3 +24,18 @@ def test_read_all_interviews(client, application, interview):
 
     assert response.status_code == HTTPStatus.OK
     assert response.json()[0]['application_id'] == application['id']
+
+
+def test_read_interview_with_id(client, interview):
+    response = client.get(f'/interviews/{interview["id"]}')
+
+    assert response.status_code == HTTPStatus.OK
+    assert response.json()['id'] == interview['id']
+
+
+def test_read_interview_with_id_not_found(client, interview):
+
+    response = client.get('/interviews/10')
+
+    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.json() == {'detail': 'Interview not found'}
